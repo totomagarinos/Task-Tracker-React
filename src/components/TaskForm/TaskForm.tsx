@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import "./TaskForm.css";
+import { TaskContext } from "../../context/TaskContext";
 
-interface FormProps {
-  onAddTask: (task: string) => void;
-}
-
-const TasksForm = ({ onAddTask }: FormProps) => {
+const TaskForm = () => {
   const [input, setInput] = useState("");
+  const { addTask } = useContext(TaskContext);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (input !== "") {
-      onAddTask(input);
+    if (input.trim() !== "") {
+      addTask(input);
       setInput("");
     }
-
-    console.log(input);
   };
 
   return (
@@ -34,4 +31,4 @@ const TasksForm = ({ onAddTask }: FormProps) => {
   );
 };
 
-export default TasksForm;
+export default TaskForm;
