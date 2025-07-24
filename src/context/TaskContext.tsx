@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { Task } from "../models/task.model";
 
 interface TaskContextType {
@@ -20,11 +20,18 @@ interface Params {
 }
 
 export const TaskProvider = ({ children }: Params) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (taskText: string) => {
     const newTask = {
-      id: Date.now(),
+      id: tasks.length + 1,
       text: taskText,
       completed: false,
     };
