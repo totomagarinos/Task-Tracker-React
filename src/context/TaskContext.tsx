@@ -6,6 +6,7 @@ interface TaskContextType {
   addTask: (taskText: string) => void;
   deleteTask: (taskId: number) => void;
   toggleTask: (taskId: number) => void;
+  updateTask: (taskId: number, newText: string) => void;
 }
 
 export const TaskContext = createContext<TaskContextType>({
@@ -13,6 +14,7 @@ export const TaskContext = createContext<TaskContextType>({
   addTask: () => {},
   deleteTask: () => {},
   toggleTask: () => {},
+  updateTask: () => {},
 });
 
 interface Params {
@@ -51,8 +53,18 @@ export const TaskProvider = ({ children }: Params) => {
     );
   };
 
+  const updateTask = (taskId: number, newText: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, text: newText } : task
+      )
+    );
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, deleteTask, toggleTask }}>
+    <TaskContext.Provider
+      value={{ tasks, addTask, deleteTask, toggleTask, updateTask }}
+    >
       {children}
     </TaskContext.Provider>
   );

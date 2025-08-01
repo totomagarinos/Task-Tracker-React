@@ -30,9 +30,17 @@
 .item button {
   font-size: 1.3rem;
   background-color: transparent;
-  padding: 0;
+  padding: 4px;
   margin-left: 40px;
+  border: none;
+}
+
+.item .delete-button {
   position: absolute;
   right: 12px;
-  border: none;
+}
+
+.item .edit-button {
+  position: absolute;
+  right: 3rem;
 }
